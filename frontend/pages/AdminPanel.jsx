@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { routesAPI, adminAPI } from '../services/api';
+import Chatbot from '../components/Chatbot';
 import { 
   Settings, 
   Play, 
@@ -566,6 +567,9 @@ function AdminPanel() {
           </div>
         </div>
       </div>
+      
+      {/* Chatbot */}
+      <Chatbot />
     </div>
   );
 }

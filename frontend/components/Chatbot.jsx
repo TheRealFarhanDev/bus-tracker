@@ -57,12 +57,12 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="fixed bottom-5 right-5 z-50">
+    <div className="fixed bottom-5 right-5 z-[9999]">
       {/* Chat Bubble Button */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-blue-600 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-blue-700 transition-all text-2xl"
+          className="bg-blue-600 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-lg hover:bg-blue-700 transition-all text-2xl"
         >
           🤖
         </button>

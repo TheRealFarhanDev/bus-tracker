@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import StudentDashboard from './pages/StudentDashboard';
 import AdminPanel from './pages/AdminPanel';
 import Login from './pages/Login';
+import RealTimeTracking from './pages/RealTimeTracking';
 import ProtectedRoute from './components/ProtectedRoute';
 import {
   Bus,
@@ -61,23 +62,23 @@ function Home() {
   return (
     <div className="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-sm border-b border-gray-200 sticky top-0 z-50">
+      <nav className="bg-gradient-to-r from-purple-600 to-blue-700 text-white sticky top-0 z-50 shadow-lg">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                 <Bus className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-2xl font-bold text-gray-900">BusTracker</h1>
+              <h1 className="text-2xl font-bold text-white">BusTracker</h1>
             </div>
             
             <div className="flex items-center gap-4">
               {user.name ? (
                 <>
-                  <span className="text-gray-700">Welcome, {user.name}</span>
+                  <span className="text-white/90">Welcome, {user.name}</span>
                   <button
                     onClick={handleLogout}
-                    className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                    className="flex items-center gap-2 px-4 py-2 text-white/90 hover:text-white transition-colors"
                   >
                     <LogOut className="w-4 h-4" />
                     Logout
@@ -86,7 +87,7 @@ function Home() {
               ) : (
                 <Link
                   to="/login"
-                  className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 bg-white/20 text-white rounded-lg hover:bg-white/30 transition-colors backdrop-blur-sm"
                 >
                   <Users className="w-4 h-4" />
                   Login
@@ -104,7 +105,7 @@ function Home() {
         
         <img
           className="absolute inset-0 w-full h-full object-cover object-center"
-          src="/assets/bg.PNG"
+          src="https://www.navkisce.com/assets/images/transportation/3.jpg"
           alt="College Gate"
         />
         <div className="w-full max-w-3xl space-y-6 bg-white/1 backdrop-blur-sm border border-gray-300 shadow-xl rounded-xl px-6 py-10 text-center mx-auto">
@@ -114,7 +115,7 @@ function Home() {
             <div className="w-12 h-12 bg-white/60 border border-gray-300 rounded-full flex items-center justify-center shadow">
               <Bus className="w-6 h-6 text-black" />
             </div>
-            <h1 className="text-4xl font-bold text-black px-3 py-1 rounded-lg">
+            <h1 className="text-4xl font-bold text-white px-3 py-1 rounded-lg">
               NCE – Live Bus Tracker
             </h1>
           </div>
@@ -278,6 +279,14 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={['admin']}>
               <AdminPanel />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/realtime" 
+          element={
+            <ProtectedRoute allowedRoles={['student', 'admin']}>
+              <RealTimeTracking />
             </ProtectedRoute>
           } 
         />

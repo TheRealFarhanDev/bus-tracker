@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
-import { Bus, MapPin, Clock, Play, Pause, RotateCcw, Navigation, Users, Timer, AlertCircle, RefreshCw, LogOut } from 'lucide-react';
+import { Bus, MapPin, Clock, Play, Pause, RotateCcw, Navigation, Users, Timer, AlertCircle, RefreshCw, LogOut, Satellite } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { routesAPI } from '../services/api';
 import socketService from '../services/socket';
+import Chatbot from '../components/Chatbot';
+import ContactForm from '../components/ContactForm';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
@@ -358,6 +360,26 @@ function StudentDashboard() {
                 </select>
               </div>
               
+              {/* Real-Time Tracking Button */}
+              <div className="p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg border border-purple-200">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="p-2 bg-purple-100 rounded-lg">
+                    <Satellite className="w-5 h-5 text-purple-600" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-purple-900">IoT Real-Time Tracking</h3>
+                    <p className="text-sm text-purple-700">Live GPS tracking from ThingSpeak platform</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => navigate('/realtime')}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all font-medium"
+                >
+                  <Satellite className="w-4 h-4" />
+                  Open Real-Time GPS Tracking
+                </button>
+              </div>
+              
               {selectedRouteData && (
                 <div className="p-4 bg-blue-50 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
@@ -698,6 +720,23 @@ function StudentDashboard() {
           </div>
         )}
       </div>
+      
+      {/* Contact Form Section */}
+      <div className="bg-gradient-to-br from-purple-50 to-blue-50 py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Need Help?</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Having trouble with bus tracking, route information, or experiencing technical issues? 
+              Our support team is here to help you with any questions about the bus tracking system.
+            </p>
+          </div>
+          <ContactForm />
+        </div>
+      </div>
+      
+      {/* Chatbot */}
+      <Chatbot />
     </div>
   );
 }
