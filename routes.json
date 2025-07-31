@@ -1,0 +1,89 @@
+{
+  "routes": [
+    {
+      "id": "route-01",
+      "name": "Route 01",
+      "stops": [
+        { "name": "N.R Circle", "time": "9:10 AM" },
+        { "name": "Santhepete", "time": "9:15 AM" },
+        { "name": "Thanniruhalla", "time": "9:18 AM" },
+        { "name": "Vijayanagara", "time": "9:20 AM" },
+        { "name": "Heritage Club", "time": "9:25 AM" },
+        { "name": "D.M. Halli", "time": "9:30 AM" },
+        { "name": "Kandali", "time": "9:35 AM" },
+        { "name": "College", "time": "9:40 AM" }
+      ]
+    },
+    {
+      "id": "route-02",
+      "name": "Route 02",
+      "stops": [
+        { "name": "Ringroad Junction", "time": "9:00 AM" },
+        { "name": "Thamlapura", "time": "9:04 AM" },
+        { "name": "Shantinagara", "time": "9:08 AM" },
+        { "name": "Hemavathinagara", "time": "9:10 AM" },
+        { "name": "Stadium", "time": "9:12 AM" },
+        { "name": "Sanjeevini Hospital", "time": "9:13 AM" },
+        { "name": "Hassan Public School", "time": "9:14 AM" },
+        { "name": "Kalabhavana", "time": "9:15 AM" },
+        { "name": "New Bus Stand", "time": "9:25 AM" },
+        { "name": "College", "time": "9:40 AM" }
+      ]
+    },
+    {
+      "id": "route-03",
+      "name": "Route 03",
+      "stops": [
+        { "name": "Shankarmutt Road", "time": "8:55 AM" },
+        { "name": "Euro Kids (M.G Road)", "time": "8:57 AM" },
+        { "name": "Ramakrishna Hospital", "time": "8:59 AM" },
+        { "name": "MCE Ganapathi Temple", "time": "9:00 AM" },
+        { "name": "Thanvithrisha", "time": "9:02 AM" },
+        { "name": "M.C.F Quarters", "time": "9:07 AM" },
+        { "name": "Dasarakoppalu", "time": "9:10 AM" },
+        { "name": "V.V Badavane", "time": "9:12 AM" },
+        { "name": "M.C.E", "time": "9:14 AM" },
+        { "name": "Nisarga Hostel", "time": "9:16 AM" },
+        { "name": "Slaters Hall", "time": "9:18 AM" },
+        { "name": "New Bus Stand", "time": "9:25 AM" },
+        { "name": "College", "time": "9:40 AM" }
+      ]
+    },
+    {
+      "id": "route-04",
+      "name": "Route 04",
+      "stops": [
+        { "name": "Ganapathi Temple (K.N)", "time": "8:55 AM" },
+        { "name": "Hoysalanagara", "time": "8:58 AM" },
+        { "name": "Gowrikoppalu", "time": "9:00 AM" },
+        { "name": "Euro Kids / Manjunatha D.Ed College", "time": "9:02 AM" },
+        { "name": "Satyamangala Cross", "time": "9:08 AM" },
+        { "name": "Matrushree", "time": "9:12 AM" },
+        { "name": "Evergreen P.G", "time": "9:14 AM" },
+        { "name": "L.I.C Office", "time": "9:15 AM" },
+        { "name": "Sparsh Hospital", "time": "9:20 AM" },
+        { "name": "New Bus Stand", "time": "9:25 AM" },
+        { "name": "Channapattana", "time": "9:27 AM" },
+        { "name": "College", "time": "9:40 AM" }
+      ]
+    },
+    {
+      "id": "route-05",
+      "name": "Route 05",
+      "stops": [
+        { "name": "Pruthvi Theatre", "time": "9:00 AM" },
+        { "name": "Gas Bunk", "time": "9:02 AM" },
+        { "name": "Railway Station", "time": "9:04 AM" },
+        { "name": "Dairy Circle", "time": "9:07 AM" },
+        { "name": "Satyamangala", "time": "9:09 AM" },
+        { "name": "Katihalli", "time": "9:12 AM" },
+        { "name": "R.T.O", "time": "9:13 AM" },
+        { "name": "Bhoovanahalli Koodu", "time": "9:18 AM" },
+        { "name": "Gavenahalli", "time": "9:22 AM" },
+        { "name": "Bommanayakanahalli", "time": "9:25 AM" },
+        { "name": "Gorur Circle", "time": "9:30 AM" },
+        { "name": "College", "time": "9:40 AM" }
+      ]
+    }
+  ]
+}

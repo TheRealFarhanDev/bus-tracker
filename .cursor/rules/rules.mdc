@@ -1,0 +1,59 @@
+---
+description: 
+globs: **/*
+alwaysApply: false
+---
+{
+  "allowedPackages": [
+    "react", "react-dom", "react-router-dom", "axios",
+    "react-hook-form", "zod", "framer-motion", "lucide-react",
+    "tailwindcss", "shadcn/ui", "@radix-ui/react-toast",
+    "express", "mongoose", "jsonwebtoken", "bcryptjs", "cors", "dotenv",
+    "nodemon", "concurrently", "morgan", "cookie-parser",
+    "uuid", "classnames", "react-toastify", "dayjs", "validator"
+  ],
+  "optionalPackages": [
+    "cloudinary", "multer", "stripe", "razorpay", "helmet", "compression", "socket.io-client"
+  ],
+  "disallowedPackages": [
+    "typescript", "next", "redux", "graphql", "jquery", "rxjs"
+  ],
+  "directoryRules": {
+    "frontend": {
+      "mustHaveDirectories": [
+        "components", "pages", "hooks", "contexts", "services", "utils", "assets"
+      ],
+      "optionalDirectories": ["constants", "lib"],
+      "allowedFileExtensions": [".jsx", ".js", ".css", ".json", ".svg", ".png", ".jpg"]
+    },
+    "backend": {
+      "mustHaveDirectories": [
+        "controllers", "models", "routes", "middlewares", "utils", "config"
+      ],
+      "optionalDirectories": ["services", "validators"],
+      "mustHaveFiles": ["server.js", ".env"],
+      "allowedFileExtensions": [".js", ".json"]
+    }
+  },
+  "namingRules": {
+    "components": {
+      "shouldUsePascalCase": true
+    },
+    "hooks": {
+      "shouldStartWithUse": true
+    },
+    "routes": {
+      "shouldUseKebabCase": true
+    },
+    "files": {
+      "disallowedNames": ["index2.js", "temp.js", "test.js"]
+    }
+  },
+  "customNotes": {
+    "INFO": "Industry-grade MERN structure with optional features like Stripe, Cloudinary, etc.",
+    "SUGGESTION": "Use placeholder image APIs like 'https://source.unsplash.com/featured/?food' or 'https://loremflickr.com/320/240/food'.",
+    "DEBUG": "Use 'morgan' for request logs and a dedicated logger in /backend/utils/logger.js. Keep middlewares modular.",
+    "SECURITY": "Use 'helmet' and 'compression' for production setup."
+  }
+}
+

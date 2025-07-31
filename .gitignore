@@ -1,0 +1,45 @@
+# === Root ===
+node_modules/
+.env
+.DS_Store
+*.log
+
+# === Backend ===
+/backend/node_modules/
+/backend/.env
+/backend/dist
+/backend/build
+/backend/coverage
+
+# Logs
+/backend/logs
+/backend/npm-debug.log*
+/backend/yarn-debug.log*
+/backend/yarn-error.log*
+
+# OS files
+/backend/.DS_Store
+
+# === Frontend ===
+/frontend/node_modules/
+/frontend/.env
+/frontend/dist
+/frontend/build
+/frontend/coverage
+
+# Logs
+/frontend/logs
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+
+# OS files
+/frontend/.DS_Store
+
+# === Optional ===
+*.swp
+*.swo
+*.bak
+.idea/
+.vscode/
+.cursor
