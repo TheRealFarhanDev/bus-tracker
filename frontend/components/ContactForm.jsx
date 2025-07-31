@@ -3,16 +3,16 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Button } from './ui/button';
-import { Send, Mail, User, MessageSquare } from 'lucide-react';
+import { Send, User, MessageSquare } from 'lucide-react';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
     message: ''
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,16 +25,34 @@ const ContactForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
     
-    // Simulate form submission
-    setTimeout(() => {
+    try {
+      const response = await fetch('http://localhost:5000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to submit message');
+      }
+
       setSubmitted(true);
-      setLoading(false);
-      setFormData({ name: '', email: '', message: '' });
+      setFormData({ name: '', message: '' });
       
       // Reset submitted state after 3 seconds
       setTimeout(() => setSubmitted(false), 3000);
-    }, 1000);
+      
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -67,22 +85,6 @@ const ContactForm = () => {
                 name="name"
                 placeholder="Enter your name"
                 value={formData.name}
-                onChange={handleChange}
-                required
-                className="w-full"
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                Email Address
-              </label>
-              <Input
-                name="email"
-                type="email"
-                placeholder="your.email@example.com"
-                value={formData.email}
                 onChange={handleChange}
                 required
                 className="w-full"
@@ -124,6 +126,8 @@ const ContactForm = () => {
             </Button>
           </form>
         )}
+        {/* Error */}
+        {error && <div className="p-2 text-sm text-red-500 text-center">{error}</div>}
       </CardContent>
     </Card>
   );

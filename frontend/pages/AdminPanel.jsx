@@ -19,7 +19,11 @@ import {
   Monitor,
   Calendar,
   Timer,
-  LogOut
+  LogOut,
+  MessageSquare,
+  Eye,
+  Trash2,
+  Mail
 } from 'lucide-react';
 
 function AdminPanel() {
@@ -31,6 +35,10 @@ function AdminPanel() {
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [connectionStatus, setConnectionStatus] = useState('checking');
   const [error, setError] = useState(null);
+  const [showContactMessages, setShowContactMessages] = useState(false);
+  const [contactMessages, setContactMessages] = useState([]);
+  const [contactStats, setContactStats] = useState({ total: 0, pending: 0, read: 0, replied: 0 });
+  const [loadingContacts, setLoadingContacts] = useState(false);
   const navigate = useNavigate();
 
   // Demo route for presentation
@@ -189,6 +197,109 @@ function AdminPanel() {
     localStorage.removeItem('user');
     navigate('/login');
     console.log('Admin logged out.');
+  };
+
+  const fetchContactMessages = async () => {
+    try {
+      setLoadingContacts(true);
+      const token = localStorage.getItem('token');
+      
+      const response = await fetch('http://localhost:5000/api/contact', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch contact messages');
+      }
+
+      const data = await response.json();
+      setContactMessages(data.data.contacts || []);
+    } catch (error) {
+      console.error('Error fetching contact messages:', error);
+      setError('Failed to load contact messages');
+    } finally {
+      setLoadingContacts(false);
+    }
+  };
+
+  const fetchContactStats = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      
+      const response = await fetch('http://localhost:5000/api/contact/stats', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch contact stats');
+      }
+
+      const data = await response.json();
+      setContactStats(data.data);
+    } catch (error) {
+      console.error('Error fetching contact stats:', error);
+    }
+  };
+
+  const updateContactStatus = async (contactId, newStatus) => {
+    try {
+      const token = localStorage.getItem('token');
+      
+      const response = await fetch(`http://localhost:5000/api/contact/${contactId}`, {
+        method: 'PATCH',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update contact status');
+      }
+
+      // Refresh the contact messages
+      fetchContactMessages();
+      fetchContactStats();
+    } catch (error) {
+      console.error('Error updating contact status:', error);
+      setError('Failed to update contact status');
+    }
+  };
+
+  const deleteContact = async (contactId) => {
+    if (!window.confirm('Are you sure you want to delete this message?')) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('token');
+      
+      const response = await fetch(`http://localhost:5000/api/contact/${contactId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete contact');
+      }
+
+      // Refresh the contact messages
+      fetchContactMessages();
+      fetchContactStats();
+    } catch (error) {
+      console.error('Error deleting contact:', error);
+      setError('Failed to delete contact');
+    }
   };
 
   if (loading) {
@@ -566,6 +677,149 @@ function AdminPanel() {
             </div>
           </div>
         </div>
+      </div>
+      
+      {/* Contact Messages Section */}
+      <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8 mb-8">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-purple-100 rounded-full">
+              <MessageSquare className="w-8 h-8 text-purple-600" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">Contact Messages</h2>
+              <p className="text-gray-600">Manage student inquiries and support requests</p>
+            </div>
+          </div>
+          
+          <button
+            onClick={() => {
+              setShowContactMessages(!showContactMessages);
+              if (!showContactMessages) {
+                fetchContactMessages();
+                fetchContactStats();
+              }
+            }}
+            className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+          >
+            <Eye className="w-4 h-4" />
+            {showContactMessages ? 'Hide Messages' : 'View Messages'}
+          </button>
+        </div>
+        
+        {showContactMessages && (
+          <div className="space-y-6">
+            {/* Contact Stats */}
+            <div className="grid md:grid-cols-4 gap-4">
+              <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                <div className="flex items-center gap-2">
+                  <Mail className="w-5 h-5 text-blue-600" />
+                  <span className="text-sm font-medium text-blue-800">Total Messages</span>
+                </div>
+                <div className="text-2xl font-bold text-blue-900 mt-1">{contactStats.total}</div>
+              </div>
+              
+              <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200">
+                <div className="flex items-center gap-2">
+                  <AlertCircle className="w-5 h-5 text-yellow-600" />
+                  <span className="text-sm font-medium text-yellow-800">Pending</span>
+                </div>
+                <div className="text-2xl font-bold text-yellow-900 mt-1">{contactStats.pending}</div>
+              </div>
+              
+              <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                <div className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <span className="text-sm font-medium text-green-800">Read</span>
+                </div>
+                <div className="text-2xl font-bold text-green-900 mt-1">{contactStats.read}</div>
+              </div>
+              
+              <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                <div className="flex items-center gap-2">
+                  <MessageSquare className="w-5 h-5 text-purple-600" />
+                  <span className="text-sm font-medium text-purple-800">Replied</span>
+                </div>
+                <div className="text-2xl font-bold text-purple-900 mt-1">{contactStats.replied}</div>
+              </div>
+            </div>
+            
+            {/* Contact Messages List */}
+            {loadingContacts ? (
+              <div className="text-center py-8">
+                <div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <p className="text-gray-600">Loading messages...</p>
+              </div>
+            ) : contactMessages.length === 0 ? (
+              <div className="text-center py-8">
+                <MessageSquare className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-600 mb-2">No Messages</h3>
+                <p className="text-gray-500">No contact messages have been submitted yet.</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {contactMessages.map((contact) => (
+                  <div key={contact._id} className="bg-gray-50 rounded-lg border border-gray-200 p-4">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="font-semibold text-gray-900">{contact.name}</h3>
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            contact.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                            contact.status === 'read' ? 'bg-blue-100 text-blue-800' :
+                            'bg-green-100 text-green-800'
+                          }`}>
+                            {contact.status}
+                          </span>
+                        </div>
+                        <p className="text-gray-700 mb-3">{contact.message}</p>
+                        <div className="text-xs text-gray-500">
+                          {new Date(contact.createdAt).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-2 ml-4">
+                        {contact.status === 'pending' && (
+                          <button
+                            onClick={() => updateContactStatus(contact._id, 'read')}
+                            className="p-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 transition-colors"
+                            title="Mark as Read"
+                          >
+                            <Eye className="w-4 h-4" />
+                          </button>
+                        )}
+                        
+                        {contact.status === 'read' && (
+                          <button
+                            onClick={() => updateContactStatus(contact._id, 'replied')}
+                            className="p-2 bg-green-100 text-green-600 rounded-lg hover:bg-green-200 transition-colors"
+                            title="Mark as Replied"
+                          >
+                            <CheckCircle className="w-4 h-4" />
+                          </button>
+                        )}
+                        
+                        <button
+                          onClick={() => deleteContact(contact._id)}
+                          className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors"
+                          title="Delete Message"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
       
       {/* Chatbot */}

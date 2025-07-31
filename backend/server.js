@@ -12,6 +12,7 @@ import BusLocationSimulator from './utils/busLocationSim.js';
 import routesRouter from './routes/routes.js';
 import geminiRouter from './routes/gemini.js';
 import authRouter from './routes/auth.js';
+import contactRouter from './routes/contact.js';
 
 // Load environment variables
 dotenv.config();
@@ -70,6 +71,7 @@ const busSimulator = new BusLocationSimulator();
 app.use('/api/auth', authRouter);
 app.use('/api/routes', routesRouter);
 app.use('/api/gemini', geminiRouter);
+app.use('/api/contact', contactRouter);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
