@@ -66,12 +66,13 @@ function Home() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                <Bus className="w-6 h-6 text-white" />
+              <div className="w-12 h-12 bg-white rounded flex items-center justify-center">
+                {/* <Bus className="w-6 h-6 text-white" /> */}
+                <img src="./assets/navLogo.png" alt="Logo" className="w-full h-full object-contain size-7" />
               </div>
               <h1 className="text-2xl font-bold text-white">BusTracker</h1>
             </div>
-            
+
             <div className="flex items-center gap-4">
               {user.name ? (
                 <>
@@ -102,7 +103,7 @@ function Home() {
       <div className="relative container mx-auto px-4 min-h-screen flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-transparent z-10 pointer-events-none" />
 
-        
+
         <img
           className="absolute inset-0 w-full h-full object-cover object-center"
           src="https://www.navkisce.com/assets/images/transportation/3.jpg"
@@ -112,8 +113,10 @@ function Home() {
 
           {/* Logo + Title */}
           <div className="flex items-center justify-center gap-3">
-            <div className="w-12 h-12 bg-white/60 border border-gray-300 rounded-full flex items-center justify-center shadow">
-              <Bus className="w-6 h-6 text-black" />
+            <div className="size-24 bg-white border border-gray-300 rounded flex items-center justify-center shadow">
+              {/* <Bus className="w-6 h-6 text-black" /> */}
+              <img src="./assets/navLogo.png" alt="Logo" className="w-full h-full object-contain size-24" />
+
             </div>
             <h1 className="text-4xl font-bold text-white px-3 py-1 rounded-lg">
               NCE – Live Bus Tracker
@@ -241,8 +244,9 @@ function Home() {
       <footer className="bg-gray-900 text-white">
         <div className="container mx-auto px-4 py-8">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Bus className="w-6 h-6" />
+            <div className="flex items-center gap-3 size-12 bg-white rounded">
+              {/* <Bus className="w-6 h-6" /> */}
+              <img src="./assets/navLogo.png" alt="Logo" className="w-full h-full object-contain size-12" />
               <span className="font-semibold">BusTracker</span>
             </div>
             <div className="flex items-center gap-4">
@@ -252,7 +256,7 @@ function Home() {
             </div>
           </div>
           <div className="mt-4 pt-4 border-t border-gray-800 text-center text-gray-400">
-            <p>&copy; 2024 BusTracker. Built with ❤️ for NCE students.</p>
+            <p>&copy; 2025 Navkis - BusTracker. Built with ❤️ for NCE students.</p>
           </div>
         </div>
       </footer>
@@ -266,29 +270,29 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route 
-          path="/student" 
+        <Route
+          path="/student"
           element={
             <ProtectedRoute allowedRoles={['student', 'admin']}>
               <StudentDashboard />
             </ProtectedRoute>
-          } 
+          }
         />
-        <Route 
-          path="/admin" 
+        <Route
+          path="/admin"
           element={
             <ProtectedRoute allowedRoles={['admin']}>
               <AdminPanel />
             </ProtectedRoute>
-          } 
+          }
         />
-        <Route 
-          path="/realtime" 
+        <Route
+          path="/realtime"
           element={
             <ProtectedRoute allowedRoles={['student', 'admin']}>
               <RealTimeTracking />
             </ProtectedRoute>
-          } 
+          }
         />
       </Routes>
     </Router>

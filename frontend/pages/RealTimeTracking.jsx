@@ -73,7 +73,7 @@ function RealTimeTracking() {
     fetchLocation();
     
     // Set up interval
-    const interval = setInterval(fetchLocation, 10000);
+    const interval = setInterval(fetchLocation, 5000);
 
     // Cleanup
     return () => {
